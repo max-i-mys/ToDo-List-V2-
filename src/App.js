@@ -1,6 +1,6 @@
 import "./App.css"
 import TaskCards from "./components/TaskCards/TaskCards"
-import TaskAdd from "./components/TaskTodo/TaskTodo"
+import TaskAdd from "./components/TaskAdd/TaskAdd"
 
 function App() {
 	return (

@@ -1,5 +1,5 @@
 import React, { useReducer, useEffect, createContext } from "react"
-import { BASE_URL } from "../api/constatns"
+import { BASE_URL } from "../api/constants"
 import { fetchList } from "../api/cruds"
 const initialState = []
 
@@ -10,8 +10,10 @@ export default function CardsContext({ children }) {
 		switch (action.type) {
 			case "INITIAL":
 				return action.payload
+			case "ADD":
+				return [...state, action.payload]
 			default:
-				break
+				throw new Error(`Wrong mean action.type: ${action.type}`)
 		}
 	}
 	useEffect(() => {
@@ -19,7 +21,7 @@ export default function CardsContext({ children }) {
 			const cardsData = await fetchList(BASE_URL, "tasks")
 			dispatch({ type: "INITIAL", payload: cardsData })
 		})()
-	}, [cards])
+	}, [])
 
 	return (
 		<>
