@@ -12,6 +12,14 @@ export default function CardsContext({ children }) {
 				return action.payload
 			case "ADD":
 				return [...state, action.payload]
+			case "UPDATE": {
+				const newState = JSON.parse(JSON.stringify(state))
+				const idX = newState.findIndex(task => task.id === action.payload.id)
+				if (idX !== -1) {
+					newState.splice(idX, 1, action.payload)
+				}
+				return newState
+			}
 			default:
 				throw new Error(`Wrong mean action.type: ${action.type}`)
 		}

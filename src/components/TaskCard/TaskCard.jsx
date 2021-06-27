@@ -1,10 +1,26 @@
+import { BASE_URL } from "../../api/constants"
+import { fetchMerge } from "../../api/cruds"
+import useCardsContext from "../../hooks/useCardsContext"
 import { formatterDate, formatterDateAndTime } from "../../utils/constants"
-import { defineStatus } from "../../utils/functions"
+import { checkAndSetStatus, defineStatus } from "../../utils/functions"
 
 export default function TaskCard({ task }) {
+	const [, dispatch] = useCardsContext()
+	async function setNewStatus(e) {
+		e.preventDefault()
+		const nextStatus = checkAndSetStatus(task.status)
+		if (nextStatus !== task.status) {
+			const taskWithNewStatus = await fetchMerge(BASE_URL, "tasks", task.id, {
+				status: nextStatus,
+				processAt: nextStatus === 2 ? Date.now() : task.processAt,
+				finishAt: nextStatus === 3 ? Date.now() : task.finishAt,
+			})
+			dispatch({ type: "UPDATE", payload: taskWithNewStatus })
+		}
+	}
 	return (
 		<>
-			<div className="task">
+			<div className="task" onContextMenu={setNewStatus}>
 				<h3>{task.title}</h3>
 				<h5>{defineStatus(task.status)}</h5>
 				<div>
