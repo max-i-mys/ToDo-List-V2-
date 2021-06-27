@@ -53,11 +53,19 @@
 .task__date > span:first-of-type {
 	color: #da3636;
 }
-.task__desk {
+.task__desk-box {
 	font-style: italic;
 	font-size: 1.1rem;
 	line-height: 1.2;
 	width: 70%;
 	align-items: center;
 	display: inline-flex;
+	padding: 15px 0;
+}
+.task__desk {
+	overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 4;
+	-webkit-box-orient: vertical;
 }

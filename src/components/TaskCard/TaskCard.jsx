@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { BASE_URL } from "../../api/constants"
 import { fetchMerge } from "../../api/cruds"
 import useCardsContext from "../../hooks/useCardsContext"
@@ -7,6 +8,7 @@ import TaskDelete from "../TaskRestore/TaskRestore"
 import "./TaskCard.css"
 
 export default function TaskCard({ task }) {
+	const [body, setBody] = useState(true)
 	const [, dispatch] = useCardsContext()
 	const stringStatus = defineStatus(task.status)
 	async function setNewStatus(e) {
@@ -28,7 +30,14 @@ export default function TaskCard({ task }) {
 					<h3>{task.title}</h3>
 					<h5>({stringStatus})</h5>
 				</div>
-				<p className="task__desk">{task.body}</p>
+				<div className="task__desk-box">
+					<p
+						onClick={() => setBody(!body)}
+						className={body ? "task__desk" : undefined}
+					>
+						{task.body}
+					</p>
+				</div>
 				<div className="task__date">
 					<span>Expiration date: {formatterDate.format(task.expirateAt)}</span>
 					<span>Created: {formatterDateAndTime.format(task.createdAt)}</span>
