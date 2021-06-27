@@ -1,6 +1,7 @@
 import { BASE_URL } from "../../api/constants"
 import { fetchRemove } from "../../api/cruds"
 import useCardsContext from "../../hooks/useCardsContext"
+import "./TaskRestore.css"
 
 export default function TaskDelete({ task }) {
 	const [, dispatch] = useCardsContext()
@@ -10,6 +11,12 @@ export default function TaskDelete({ task }) {
 		dispatch({ type: "DELETE", payload: task.id })
 	}
 	return (
-		<>{task.status === 3 && <button onClick={restoreTask}>Delete</button>}</>
+		<>
+			{task.status === 3 && (
+				<button onClick={restoreTask} className="btn-restore">
+					Del
+				</button>
+			)}
+		</>
 	)
 }

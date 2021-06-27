@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import { BASE_URL } from "../../api/constants"
 import { fetchAdd } from "../../api/cruds"
 import useCardsContext from "../../hooks/useCardsContext"
+import "./TaskAdd.css"
 
 export default function TaskAdd() {
 	const [, dispatchTask] = useCardsContext()
@@ -25,16 +26,18 @@ export default function TaskAdd() {
 
 	return (
 		<>
-			<form onSubmit={addNewTask}>
+			<form onSubmit={addNewTask} className="task__add">
 				<input
+					className="task__add-title"
 					type="text"
 					onChange={e => setTitle(() => e.target.value)}
+					placeholder="Title"
 					required
 				/>
 				<textarea
-					cols="50"
-					rows="10"
+					className="task__add-body"
 					onChange={e => setBody(() => e.target.value)}
+					placeholder="Description"
 					required
 				></textarea>
 				<span>Enter expiration date</span>
@@ -43,7 +46,9 @@ export default function TaskAdd() {
 					onChange={e => setExpDate(() => e.target.value)}
 					required
 				/>
-				<button type="submit">Add</button>
+				<button className="task__btn" type="submit">
+					Add
+				</button>
 			</form>
 		</>
 	)

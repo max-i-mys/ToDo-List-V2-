@@ -1,0 +1,23 @@
+.task__add {
+	display: flex;
+	flex-direction: column;
+	max-width: 400px;
+	margin: 30px auto 0;
+	align-items: center;
+}
+.task__add > :nth-child(n + 2) {
+	margin-top: 10px;
+}
+.task__btn {
+	padding: 10px 50px;
+}
+.task__add-title,
+.task__add-body {
+	width: 100%;
+}
+.task__add-title {
+	height: 20px;
+}
+.task__add-body {
+	min-height: 100px;
+}

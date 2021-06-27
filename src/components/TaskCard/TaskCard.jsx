@@ -3,10 +3,12 @@ import { fetchMerge } from "../../api/cruds"
 import useCardsContext from "../../hooks/useCardsContext"
 import { formatterDate, formatterDateAndTime } from "../../utils/constants"
 import { checkAndSetStatus, defineStatus } from "../../utils/functions"
-import TaskDelete from "../TaskDelete/TaskDelete"
+import TaskDelete from "../TaskRestore/TaskRestore"
+import "./TaskCard.css"
 
 export default function TaskCard({ task }) {
 	const [, dispatch] = useCardsContext()
+	const stringStatus = defineStatus(task.status)
 	async function setNewStatus(e) {
 		e.preventDefault()
 		const nextStatus = checkAndSetStatus(task.status)
@@ -14,38 +16,30 @@ export default function TaskCard({ task }) {
 			const taskWithNewStatus = await fetchMerge(BASE_URL, "tasks", task.id, {
 				status: nextStatus,
 				processAt: nextStatus === 2 ? Date.now() : task.processAt,
-				finishAt: nextStatus === 3 ? Date.now() : task.finishAt,
+				finishedAt: nextStatus === 3 ? Date.now() : task.finishedAt,
 			})
 			dispatch({ type: "UPDATE", payload: taskWithNewStatus })
 		}
 	}
 	return (
 		<>
-			<div className="task" onContextMenu={setNewStatus}>
-				<h3>{task.title}</h3>
-				<h5>{defineStatus(task.status)}</h5>
-				<div>
-					<p>{task.body}</p>
-					<div>
+			<div className={`task ${stringStatus}`} onContextMenu={setNewStatus}>
+				<div className="task__title">
+					<h3>{task.title}</h3>
+					<h5>({stringStatus})</h5>
+				</div>
+				<p className="task__desk">{task.body}</p>
+				<div className="task__date">
+					<span>Expiration date: {formatterDate.format(task.expirateAt)}</span>
+					<span>Created: {formatterDateAndTime.format(task.createdAt)}</span>
+					{task.processAt && (
+						<span>Process: {formatterDateAndTime.format(task.processAt)}</span>
+					)}
+					{task.finishedAt && (
 						<span>
-							Expiration date: {formatterDate.format(task.expirateAt)}
+							Finished: {formatterDateAndTime.format(task.finishedAt)}
 						</span>
-						<div>
-							<span>
-								Created: {formatterDateAndTime.format(task.createdAt)}
-							</span>
-							{task.processAt && (
-								<span>
-									Process: {formatterDateAndTime.format(task.processAt)}
-								</span>
-							)}
-							{task.finishAt && (
-								<span>
-									Finished: {formatterDateAndTime.format(task.finishAt)}
-								</span>
-							)}
-						</div>
-					</div>
+					)}
 				</div>
 				<TaskDelete task={task} />
 			</div>

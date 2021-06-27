@@ -1,0 +1,12 @@
+.btn-restore {
+	position: absolute;
+	border-radius: 7px;
+	right: 3px;
+	top: 3px;
+	cursor: pointer;
+	transition: 0.3s;
+}
+.btn-restore:hover {
+	color: #fff;
+	background-color: rgba(255, 0, 0, 0.897);
+}
