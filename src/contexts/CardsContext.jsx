@@ -20,6 +20,14 @@ export default function CardsContext({ children }) {
 				}
 				return newState
 			}
+			case "DELETE": {
+				const newState = JSON.parse(JSON.stringify(state))
+				const idX = newState.findIndex(task => task.id === action.payload)
+				if (idX !== -1) {
+					newState.splice(idX, 1)
+				}
+				return newState
+			}
 			default:
 				throw new Error(`Wrong mean action.type: ${action.type}`)
 		}

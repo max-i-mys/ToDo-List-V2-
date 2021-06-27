@@ -3,6 +3,7 @@ import { fetchMerge } from "../../api/cruds"
 import useCardsContext from "../../hooks/useCardsContext"
 import { formatterDate, formatterDateAndTime } from "../../utils/constants"
 import { checkAndSetStatus, defineStatus } from "../../utils/functions"
+import TaskDelete from "../TaskDelete/TaskDelete"
 
 export default function TaskCard({ task }) {
 	const [, dispatch] = useCardsContext()
@@ -46,6 +47,7 @@ export default function TaskCard({ task }) {
 						</div>
 					</div>
 				</div>
+				<TaskDelete task={task} />
 			</div>
 		</>
 	)
