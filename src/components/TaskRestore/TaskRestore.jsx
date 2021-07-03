@@ -1,3 +1,5 @@
+import { faTimesCircle } from "@fortawesome/free-regular-svg-icons"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { restoreTask } from "../../api/crud"
 import useCardsContext from "../../hooks/useCardsContext"
 import "./TaskRestore.css"
@@ -13,7 +15,7 @@ export default function TaskRestore({ task }) {
 		<>
 			{task.status === 3 && (
 				<button onClick={resTask} className="btn-restore">
-					Del
+					<FontAwesomeIcon icon={faTimesCircle} />
 				</button>
 			)}
 		</>

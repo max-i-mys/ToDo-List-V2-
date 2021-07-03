@@ -1,12 +1,18 @@
 .btn-restore {
 	position: absolute;
-	border-radius: 7px;
-	right: 3px;
-	top: 3px;
+	right: 0;
+	top: 4px;
 	cursor: pointer;
-	transition: 0.3s;
+	border: none;
 }
-.btn-restore:hover {
+.btn-restore svg {
+	color: rgb(248, 78, 78);
+	font-size: 1.4rem;
+	transition: 0.3s;
+	border-radius: 50%;
+}
+.btn-restore:hover svg,
+.btn-restore:focus svg {
 	color: #fff;
-	background-color: rgba(255, 0, 0, 0.897);
+	background-color: red;
 }
