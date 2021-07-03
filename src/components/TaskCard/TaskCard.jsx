@@ -1,10 +1,9 @@
 import { useState } from "react"
-import { BASE_URL } from "../../api/constants"
-import { fetchMerge } from "../../api/cruds"
+import { updateTask } from "../../api/crud"
 import useCardsContext from "../../hooks/useCardsContext"
 import { formatterDate, formatterDateAndTime } from "../../utils/constants"
 import { checkAndSetStatus, defineStatus } from "../../utils/functions"
-import TaskDelete from "../TaskRestore/TaskRestore"
+import TaskRestore from "../TaskRestore/TaskRestore"
 import "./TaskCard.css"
 
 export default function TaskCard({ task }) {
@@ -15,7 +14,7 @@ export default function TaskCard({ task }) {
 		e.preventDefault()
 		const nextStatus = checkAndSetStatus(task.status)
 		if (nextStatus !== task.status) {
-			const taskWithNewStatus = await fetchMerge(BASE_URL, "tasks", task.id, {
+			const [taskWithNewStatus] = await updateTask(task.id, {
 				status: nextStatus,
 				processAt: nextStatus === 2 ? Date.now() : task.processAt,
 				finishedAt: nextStatus === 3 ? Date.now() : task.finishedAt,
@@ -32,7 +31,7 @@ export default function TaskCard({ task }) {
 				</div>
 				<div className="task__desk-box">
 					<p
-						onClick={() => setBody(!body)}
+						onClick={() => setBody(() => !body)}
 						className={body ? "task__desk" : undefined}
 					>
 						{task.body}
@@ -50,7 +49,7 @@ export default function TaskCard({ task }) {
 						</span>
 					)}
 				</div>
-				<TaskDelete task={task} />
+				<TaskRestore task={task} />
 			</div>
 		</>
 	)

@@ -1,8 +1,7 @@
 import React, { useReducer, useEffect, createContext } from "react"
-import { BASE_URL } from "../api/constants"
-import { fetchList } from "../api/cruds"
-const initialState = []
+import { getTasks } from "../api/crud"
 
+const initialState = []
 export const DataContext = createContext()
 export default function CardsContext({ children }) {
 	const [cards, dispatch] = useReducer(reducer, initialState)
@@ -34,7 +33,7 @@ export default function CardsContext({ children }) {
 	}
 	useEffect(() => {
 		;(async function () {
-			const cardsData = await fetchList(BASE_URL, "tasks")
+			const [cardsData] = await getTasks()
 			dispatch({ type: "INITIAL", payload: cardsData })
 		})()
 	}, [])

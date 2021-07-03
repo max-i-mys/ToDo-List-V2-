@@ -1,6 +1,5 @@
 import React, { useState } from "react"
-import { BASE_URL } from "../../api/constants"
-import { fetchAdd } from "../../api/cruds"
+import { addTask } from "../../api/crud"
 import useCardsContext from "../../hooks/useCardsContext"
 import "./TaskAdd.css"
 
@@ -11,12 +10,12 @@ export default function TaskAdd() {
 	const [expDate, setExpDate] = useState("")
 	async function addNewTask(e) {
 		e.preventDefault()
-		const newTask = await fetchAdd(BASE_URL, "tasks", {
+		const [newTask] = await addTask({
 			title: title,
 			body: body,
 			createdAt: Date.now(),
-			processAt: false,
-			finishedAt: false,
+			processAt: null,
+			finishedAt: null,
 			expirateAt: Date.parse(expDate),
 			status: 1,
 		})
